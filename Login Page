@@ -1,0 +1,49 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data.SqlClient;
+
+
+namespace NewWebApp
+{
+    public partial class Login : System.Web.UI.Page
+
+    {
+         SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Register.mdf;Integrated Security=True");
+
+      //  SqlConnection conn = new SqlConnection("AttachDbFilename=C:\Users\jay.shah\source\repos\NewWebApp\NewWebApp\App_Data\Register.mdf");
+
+
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            string sqlquery = "select count(*) from [Table] where Email = '" + nametxt.Text + "', Password = '" + passtxt.Text + "' ";
+            SqlCommand com = new SqlCommand(sqlquery, conn);
+            conn.Open();
+            int temp = Convert.ToInt32(com.ExecuteScalar().ToString());
+            conn.Close();
+            if (temp == 1)
+            {
+                Response.Redirect("https://localhost:44399/Homepage.aspx");
+            }
+            else
+            {
+                Response.Redirect("https://localhost:44399/Registeration.aspx");
+
+
+
+               
+
+            }
+       
+
+        }
+    }
+}
